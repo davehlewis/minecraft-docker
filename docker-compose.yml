@@ -1,0 +1,61 @@
+version: "3.3"
+
+services:
+  # RCON Web Interface for management
+  # web:
+  #   image: itzg/rcon
+  #   environment:
+  #     RWA_USERNAME: ${RWA_USERNAME}
+  #     RWA_PASSWORD: ${RWA_PASSWORD}
+  #     RWA_ADMIN: "TRUE"
+  #     # is referring to the hostname of 'mc' compose service below
+  #     RWA_RCON_HOST: atlas
+  #     # needs to match the RCON_PASSWORD configured for the container
+  #     RWA_RCON_PASSWORD: ${RCON_PASSWORD}
+  #   ports:
+  #     - 4326:4326
+  #     - 4327:4327
+  # Family minecraft bedrock server
+  lbears:
+    image: itzg/minecraft-bedrock-server
+    container_name: lbearsmc
+    ports:
+      - 19132:19132/udp
+    volumes:
+      - ./data/lbears:/data
+    environment:
+      EULA: "TRUE"
+      GAMEMODE: survival
+      DIFFICULTY: normal
+      VERSION: LATEST
+      LEVEL_SEED: 4148062705
+      LEVEL_NAME: L-Bears SMP
+      SERVER_NAME: gamesrv
+      ALLOW_LIST: true
+      OPS: ${LBEARS_OPS}
+
+  # Personal minecraft java server
+  atlas:
+    image: itzg/minecraft-server
+    container_name: atlasmc
+    ports:
+      - 25565:25565
+    volumes:
+      - ./data/atlas:/data
+    environment:
+      MEMORY: 4G
+      EULA: "TRUE"
+      TYPE: FABRIC
+      LEVEL: AtlasSMP
+      MOTD: Vanilla Minecraft, relaxed survival
+      MODE: survival
+      DIFFICULTY: hard
+      SEED: 8764718009920
+      WHITELIST: ${ATLAS_ALLOW_LIST}
+      OPS: ${ATLAS_OPS}
+      restart: always
+      RCON_PASSWORD: ${RCON_PASSWORD}
+      RCON_PORT: 28016
+      RCON_CMDS_STARTUP: |-
+        /gamerule doFireTick false
+        /gamerule disableElytraMovementCheck true
