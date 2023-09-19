@@ -29,7 +29,7 @@ services:
       DIFFICULTY: normal
       VERSION: LATEST
       LEVEL_SEED: 4148062705
-      LEVEL_NAME: L-Bears SMP
+      LEVEL_NAME: LBearsSMP
       SERVER_NAME: gamesrv
       ALLOW_LIST: true
       OPS: ${LBEARS_OPS}
