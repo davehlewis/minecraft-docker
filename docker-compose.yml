@@ -27,6 +27,7 @@ services:
       EULA: "TRUE"
       GAMEMODE: survival
       DIFFICULTY: normal
+      ALLOW_CHEATS: true
       VERSION: LATEST
       LEVEL_SEED: 4148062705
       LEVEL_NAME: LBearsSMP
